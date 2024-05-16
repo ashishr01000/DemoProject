@@ -16,9 +16,27 @@ public class App {
 		String username = "yugabdh";
 		String password = "password";
 //		Class.forName("com.mysql.cj.jdbc.Driver"); 
-		Connection con = DriverManager.getConnection(url, username, password);
-		System.out.println(con.isClosed());
-		con.close();
+		try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/interview_system", "root",
+		"toor")) {
+
+	Statement stmt = con.createStatement();
+
+	String query = "SELECT email FROM candidate WHERE email='" + email + "'";
+
+	System.out.println(query);
+
+	ResultSet result = stmt.executeQuery(query);
+
+	while (result.next()) {
+
+		emailPlaceHolder = result.getString(1);
+	}
+
+} catch (SQLException e) {
+
+	e.printStackTrace();
+
+}
 		
 	}
 }
